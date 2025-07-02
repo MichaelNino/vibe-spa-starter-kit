@@ -8,6 +8,7 @@ export interface User {
   phone: string;
   gender: 'Male' | 'Female';
   theme: 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red';
+  avatar?: string; // Base64 encoded image
   password?: string;
   createdAt: Date;
   updatedAt: Date;

@@ -96,7 +96,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <i class="bi bi-person-circle me-2"></i>
+                <UserAvatar :user="currentUser" size="sm" class="me-2" />
                 {{ currentUser?.firstName }} {{ currentUser?.lastName }}
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -126,6 +126,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { db } from '../services/database';
+import UserAvatar from './UserAvatar.vue';
 import type { User } from '../types/user';
 
 const route = useRoute();

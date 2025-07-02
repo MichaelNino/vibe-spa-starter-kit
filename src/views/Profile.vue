@@ -3,9 +3,23 @@
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6">
         <div class="text-center mb-4">
-          <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
-            <i class="bi bi-person-circle text-primary" style="font-size: 4rem;"></i>
+          <div class="position-relative d-inline-block mb-3">
+            <UserAvatar :user="user" size="xl" />
+            <div 
+              v-if="editMode" 
+              class="avatar-upload-overlay"
+              @click="triggerFileInput"
+            >
+              <i class="bi bi-camera text-white" style="font-size: 1.5rem;"></i>
+            </div>
           </div>
+          <input
+            ref="fileInput"
+            type="file"
+            accept="image/*"
+            style="display: none"
+            @change="handleAvatarUpload"
+          >
           <h1 class="h3 text-primary fw-bold">User Profile</h1>
           <p class="text-muted">Manage your account information</p>
         </div>
@@ -28,6 +42,19 @@
             </div>
 
             <form @submit.prevent="handleUpdate" v-if="editMode">
+              <div class="mb-3" v-if="avatarPreview">
+                <label class="form-label fw-semibold">Avatar Preview</label>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="avatar-container avatar-lg">
+                    <img :src="avatarPreview" alt="Avatar Preview" class="avatar-image" />
+                  </div>
+                  <button type="button" class="btn btn-outline-danger btn-sm" @click="removeAvatar">
+                    <i class="bi bi-trash me-1"></i>
+                    Remove Avatar
+                  </button>
+                </div>
+              </div>
+
               <div class="row g-3 mb-3">
                 <div class="col-md-6">
                   <label for="firstName" class="form-label fw-semibold">First Name</label>
@@ -253,6 +280,7 @@
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { db } from '../services/database';
+import UserAvatar from '../components/UserAvatar.vue';
 import type { User } from '../types/user';
 
 const router = useRouter();
@@ -262,6 +290,8 @@ const editMode = ref(false);
 const loading = ref(false);
 const updateError = ref('');
 const updateSuccess = ref('');
+const fileInput = ref<HTMLInputElement | null>(null);
+const avatarPreview = ref('');
 
 const form = reactive({
   firstName: '',
@@ -270,7 +300,8 @@ const form = reactive({
   email: '',
   phone: '',
   gender: 'Male',
-  theme: 'Green'
+  theme: 'Green',
+  avatar: ''
 });
 
 const errors = reactive({
@@ -300,6 +331,8 @@ const populateForm = () => {
     form.phone = user.value.phone;
     form.gender = user.value.gender || 'Male';
     form.theme = user.value.theme || 'Green';
+    form.avatar = user.value.avatar || '';
+    avatarPreview.value = user.value.avatar ? `data:image/png;base64,${user.value.avatar}` : '';
   }
 };
 
@@ -312,10 +345,53 @@ const enableEdit = () => {
 const cancelEdit = () => {
   editMode.value = false;
   populateForm();
+  avatarPreview.value = user.value?.avatar ? `data:image/png;base64,${user.value.avatar}` : '';
   // Reset errors
   Object.keys(errors).forEach(key => {
     errors[key as keyof typeof errors] = '';
   });
+};
+
+const triggerFileInput = () => {
+  fileInput.value?.click();
+};
+
+const handleAvatarUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+  
+  if (file) {
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      updateError.value = 'Please select a valid image file';
+      return;
+    }
+    
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      updateError.value = 'Image size must be less than 2MB';
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      // Extract base64 data (remove data:image/...;base64, prefix)
+      const base64Data = result.split(',')[1];
+      form.avatar = base64Data;
+      avatarPreview.value = result;
+      updateError.value = '';
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const removeAvatar = () => {
+  form.avatar = '';
+  avatarPreview.value = '';
+  if (fileInput.value) {
+    fileInput.value.value = '';
+  }
 };
 
 const previewTheme = () => {
@@ -395,19 +471,27 @@ const handleUpdate = async () => {
   updateSuccess.value = '';
   
   try {
-    const result = await db.updateUser({
+    const updateData: any = {
       firstName: form.firstName,
       lastName: form.lastName,
       email: form.email,
       phone: form.phone,
       gender: form.gender as 'Male' | 'Female',
       theme: form.theme as 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red'
-    });
+    };
+    
+    // Only include avatar if it has been changed
+    if (form.avatar !== (user.value?.avatar || '')) {
+      updateData.avatar = form.avatar;
+    }
+    
+    const result = await db.updateUser(updateData);
     
     if (result.success) {
       updateSuccess.value = result.message;
       user.value = result.user || null;
       editMode.value = false;
+      avatarPreview.value = '';
     } else {
       updateError.value = result.message;
     }
@@ -432,5 +516,9 @@ const handleLogout = () => {
 .form-control:focus {
   border-color: var(--primary-color, #198754);
   box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.avatar-container {
+  cursor: pointer;
 }
 </style>
