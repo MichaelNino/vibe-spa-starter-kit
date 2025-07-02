@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
-      <router-link class="navbar-brand fw-bold text-success" to="/">
+      <router-link class="navbar-brand fw-bold text-primary" to="/">
         <i class="bi bi-mountain me-2"></i>
         King of the Hill
       </router-link>
@@ -23,7 +23,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :class="{ 'active fw-semibold text-success': $route.name === 'Home' }"
+              :class="{ 'active fw-semibold text-primary': $route.name === 'Home' }"
               to="/"
             >
               <i class="bi bi-house-door me-1"></i>
@@ -33,7 +33,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :class="{ 'active fw-semibold text-success': $route.name === 'About' }"
+              :class="{ 'active fw-semibold text-primary': $route.name === 'About' }"
               to="/about"
             >
               <i class="bi bi-info-circle me-1"></i>
@@ -44,7 +44,7 @@
             <li class="nav-item">
               <router-link
                 class="nav-link"
-                :class="{ 'active fw-semibold text-success': $route.name === 'Venues' }"
+                :class="{ 'active fw-semibold text-primary': $route.name === 'Venues' }"
                 to="/venues"
               >
                 <i class="bi bi-building me-1"></i>
@@ -54,7 +54,7 @@
             <li class="nav-item">
               <router-link
                 class="nav-link"
-                :class="{ 'active fw-semibold text-success': $route.name === 'Activities' }"
+                :class="{ 'active fw-semibold text-primary': $route.name === 'Activities' }"
                 to="/activities"
               >
                 <i class="bi bi-calendar-event me-1"></i>
@@ -69,7 +69,7 @@
             <li class="nav-item">
               <router-link
                 class="nav-link"
-                :class="{ 'active fw-semibold text-success': $route.name === 'Login' }"
+                :class="{ 'active fw-semibold text-primary': $route.name === 'Login' }"
                 to="/login"
               >
                 <i class="bi bi-box-arrow-in-right me-1"></i>
@@ -78,7 +78,7 @@
             </li>
             <li class="nav-item">
               <router-link
-                class="nav-link btn btn-success text-white ms-2 px-3"
+                class="nav-link btn btn-primary text-white ms-2 px-3"
                 :class="{ 'active': $route.name === 'Register' }"
                 to="/register"
               >
@@ -164,11 +164,11 @@ watch(route, checkAuthStatus);
 
 .nav-link:hover {
   transform: translateY(-1px);
-  color: #198754 !important;
+  color: var(--primary-color) !important;
 }
 
 .nav-link.active {
-  color: #198754 !important;
+  color: var(--primary-color) !important;
 }
 
 .dropdown-menu {

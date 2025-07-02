@@ -5,7 +5,7 @@
         <div class="card shadow-lg border-0">
           <div class="card-body p-5">
             <div class="text-center mb-4">
-              <h1 class="h3 text-success fw-bold">
+              <h1 class="h3 text-primary fw-bold">
                 <i class="bi bi-person-plus me-2"></i>
                 Create Account
               </h1>
@@ -89,25 +89,70 @@
                 </div>
               </div>
 
-              <div class="mb-3">
-                <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                <div class="input-group">
-                  <span class="input-group-text">
-                    <i class="bi bi-telephone"></i>
-                  </span>
-                  <input
-                    type="tel"
-                    class="form-control"
-                    :class="{ 'is-invalid': errors.phone }"
-                    id="phone"
-                    v-model="form.phone"
-                    placeholder="(555) 123-4567"
-                    required
-                  >
-                  <div class="invalid-feedback" v-if="errors.phone">
-                    {{ errors.phone }}
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-telephone"></i>
+                    </span>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      :class="{ 'is-invalid': errors.phone }"
+                      id="phone"
+                      v-model="form.phone"
+                      placeholder="(555) 123-4567"
+                      required
+                    >
+                    <div class="invalid-feedback" v-if="errors.phone">
+                      {{ errors.phone }}
+                    </div>
                   </div>
                 </div>
+
+                <div class="col-md-6">
+                  <label for="gender" class="form-label fw-semibold">Gender</label>
+                  <select
+                    class="form-select"
+                    :class="{ 'is-invalid': errors.gender }"
+                    id="gender"
+                    v-model="form.gender"
+                    required
+                  >
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                  </select>
+                  <div class="invalid-feedback" v-if="errors.gender">
+                    {{ errors.gender }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="theme" class="form-label fw-semibold">Preferred Theme</label>
+                <select
+                  class="form-select"
+                  :class="{ 'is-invalid': errors.theme }"
+                  id="theme"
+                  v-model="form.theme"
+                  @change="previewTheme"
+                  required
+                >
+                  <option value="">Select theme</option>
+                  <option value="Green">Green</option>
+                  <option value="Blue">Blue</option>
+                  <option value="Pink">Pink</option>
+                  <option value="Purple">Purple</option>
+                  <option value="Red">Red</option>
+                </select>
+                <div class="invalid-feedback" v-if="errors.theme">
+                  {{ errors.theme }}
+                </div>
+                <small class="text-muted">This will be your app's primary color theme</small>
               </div>
 
               <div class="mb-3">
@@ -179,7 +224,7 @@
               <div class="d-grid mb-4">
                 <button
                   type="submit"
-                  class="btn btn-success btn-lg"
+                  class="btn btn-primary btn-lg"
                   :disabled="loading"
                 >
                   <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -191,7 +236,7 @@
               <div class="text-center">
                 <p class="text-muted">
                   Already have an account?
-                  <router-link to="/login" class="text-decoration-none text-success">
+                  <router-link to="/login" class="text-decoration-none text-primary">
                     Sign in here
                   </router-link>
                 </p>
@@ -218,6 +263,8 @@ const form = reactive<UserRegistration>({
   username: '',
   email: '',
   phone: '',
+  gender: 'Prefer not to say',
+  theme: 'Green',
   password: ''
 });
 
@@ -229,6 +276,8 @@ const errors = reactive({
   username: '',
   email: '',
   phone: '',
+  gender: '',
+  theme: '',
   password: '',
   confirmPassword: ''
 });
@@ -238,6 +287,13 @@ const registerSuccess = ref('');
 const loading = ref(false);
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
+
+const previewTheme = () => {
+  if (form.theme) {
+    const themeColor = db.getThemeColor(form.theme);
+    document.documentElement.style.setProperty('--primary-color', themeColor);
+  }
+};
 
 const validateForm = (): boolean => {
   let isValid = true;
@@ -275,6 +331,16 @@ const validateForm = (): boolean => {
   
   if (!form.phone.trim()) {
     errors.phone = 'Phone number is required';
+    isValid = false;
+  }
+
+  if (!form.gender) {
+    errors.gender = 'Gender is required';
+    isValid = false;
+  }
+
+  if (!form.theme) {
+    errors.theme = 'Theme is required';
     isValid = false;
   }
   
@@ -331,7 +397,7 @@ const handleRegister = async () => {
 }
 
 .form-control:focus {
-  border-color: #198754;
+  border-color: var(--primary-color, #198754);
   box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 

@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="text-center mb-5">
-          <h1 class="display-4 fw-bold text-success mb-3">
+          <h1 class="display-4 fw-bold text-primary mb-3">
             <i class="bi bi-mountain me-3"></i>
             King of the Hill
           </h1>
@@ -16,7 +16,7 @@
           <div class="col-md-6">
             <div class="card h-100 shadow-sm hover-shadow">
               <div class="card-body text-center">
-                <i class="bi bi-building text-success" style="font-size: 3rem;"></i>
+                <i class="bi bi-building text-primary" style="font-size: 3rem;"></i>
                 <h5 class="card-title mt-3">Venue Management</h5>
                 <p class="card-text text-muted">
                   Create and manage your venues with detailed information and amenities
@@ -28,7 +28,7 @@
           <div class="col-md-6">
             <div class="card h-100 shadow-sm hover-shadow">
               <div class="card-body text-center">
-                <i class="bi bi-calendar-event text-success" style="font-size: 3rem;"></i>
+                <i class="bi bi-calendar-event text-primary" style="font-size: 3rem;"></i>
                 <h5 class="card-title mt-3">Activity Planning</h5>
                 <p class="card-text text-muted">
                   Organize activities and events with scheduling and participant management
@@ -40,7 +40,7 @@
           <div class="col-md-6">
             <div class="card h-100 shadow-sm hover-shadow">
               <div class="card-body text-center">
-                <i class="bi bi-database text-success" style="font-size: 3rem;"></i>
+                <i class="bi bi-database text-primary" style="font-size: 3rem;"></i>
                 <h5 class="card-title mt-3">Local Storage</h5>
                 <p class="card-text text-muted">
                   All data stored securely in your browser using PouchDB
@@ -52,7 +52,7 @@
           <div class="col-md-6">
             <div class="card h-100 shadow-sm hover-shadow">
               <div class="card-body text-center">
-                <i class="bi bi-phone text-success" style="font-size: 3rem;"></i>
+                <i class="bi bi-phone text-primary" style="font-size: 3rem;"></i>
                 <h5 class="card-title mt-3">Mobile Ready</h5>
                 <p class="card-text text-muted">
                   Fully responsive design optimized for all devices
@@ -65,11 +65,11 @@
         <div class="text-center mt-5" v-if="!isLoggedIn">
           <h3 class="mb-3">Get Started</h3>
           <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-            <router-link to="/register" class="btn btn-success btn-lg">
+            <router-link to="/register" class="btn btn-primary btn-lg">
               <i class="bi bi-person-plus me-2"></i>
               Create Account
             </router-link>
-            <router-link to="/login" class="btn btn-outline-success btn-lg">
+            <router-link to="/login" class="btn btn-outline-primary btn-lg">
               <i class="bi bi-box-arrow-in-right me-2"></i>
               Sign In
             </router-link>
@@ -82,11 +82,11 @@
             Welcome back, {{ currentUser?.firstName }}!
           </div>
           <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-            <router-link to="/venues" class="btn btn-success btn-lg">
+            <router-link to="/venues" class="btn btn-primary btn-lg">
               <i class="bi bi-building me-2"></i>
               Manage Venues
             </router-link>
-            <router-link to="/activities" class="btn btn-outline-success btn-lg">
+            <router-link to="/activities" class="btn btn-outline-primary btn-lg">
               <i class="bi bi-calendar-event me-2"></i>
               Plan Activities
             </router-link>

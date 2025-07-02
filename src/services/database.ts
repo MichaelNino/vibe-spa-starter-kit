@@ -41,6 +41,8 @@ class DatabaseService {
         username: userData.username,
         email: userData.email,
         phone: userData.phone,
+        gender: userData.gender,
+        theme: userData.theme,
         password: userData.password, // In production, this should be hashed
         createdAt: new Date(),
         updatedAt: new Date()
@@ -74,6 +76,9 @@ class DatabaseService {
       this.currentUser = user;
       localStorage.setItem('currentUser', JSON.stringify({ username: user.username }));
 
+      // Apply user's theme
+      this.applyTheme(user.theme);
+
       // Remove password from returned user object
       const { password, ...userWithoutPassword } = user;
       
@@ -102,6 +107,11 @@ class DatabaseService {
       updatedUser._rev = result.rev;
 
       this.currentUser = updatedUser;
+
+      // Apply theme if it was updated
+      if (updatedData.theme) {
+        this.applyTheme(updatedData.theme);
+      }
 
       // Remove password from returned user object
       const { password, ...userWithoutPassword } = updatedUser;
@@ -141,6 +151,10 @@ class DatabaseService {
     if (stored) {
       const { username } = JSON.parse(stored);
       this.currentUser = await this.findUserByUsername(username);
+      if (this.currentUser) {
+        // Apply user's theme on load
+        this.applyTheme(this.currentUser.theme);
+      }
       return this.currentUser;
     }
     return null;
@@ -149,10 +163,41 @@ class DatabaseService {
   logout(): void {
     this.currentUser = null;
     localStorage.removeItem('currentUser');
+    // Reset to default theme
+    this.applyTheme('Green');
   }
 
   isLoggedIn(): boolean {
     return this.currentUser !== null;
+  }
+
+  private applyTheme(theme: string): void {
+    const themeColors = {
+      Green: '#198754',
+      Blue: '#0d6efd',
+      Pink: '#d63384',
+      Purple: '#6f42c1',
+      Red: '#dc3545'
+    };
+
+    const color = themeColors[theme as keyof typeof themeColors] || themeColors.Green;
+    
+    // Update CSS custom property
+    document.documentElement.style.setProperty('--primary-color', color);
+    
+    // Store theme preference
+    localStorage.setItem('userTheme', theme);
+  }
+
+  getThemeColor(theme: string): string {
+    const themeColors = {
+      Green: '#198754',
+      Blue: '#0d6efd',
+      Pink: '#d63384',
+      Purple: '#6f42c1',
+      Red: '#dc3545'
+    };
+    return themeColors[theme as keyof typeof themeColors] || themeColors.Green;
   }
 }
 

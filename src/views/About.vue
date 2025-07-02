@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="text-center mb-5">
-          <h1 class="display-4 fw-bold text-success mb-3">
+          <h1 class="display-4 fw-bold text-primary mb-3">
             <i class="bi bi-info-circle me-3"></i>
             About King of the Hill
           </h1>
@@ -14,7 +14,7 @@
 
         <div class="card shadow-lg border-0 mb-5">
           <div class="card-body p-5">
-            <h2 class="h3 text-success mb-4">
+            <h2 class="h3 text-primary mb-4">
               <i class="bi bi-gear me-2"></i>
               Technology Stack
             </h2>
@@ -22,8 +22,8 @@
             <div class="row g-4 mb-5">
               <div class="col-md-4">
                 <div class="text-center">
-                  <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                    <i class="bi bi-bootstrap text-success" style="font-size: 2rem;"></i>
+                  <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <i class="bi bi-bootstrap text-primary" style="font-size: 2rem;"></i>
                   </div>
                   <h5 class="mt-3">Vue 3</h5>
                   <p class="text-muted small">Progressive JavaScript framework with Composition API</p>
@@ -51,7 +51,7 @@
               </div>
             </div>
 
-            <h3 class="h4 text-success mb-3">
+            <h3 class="h4 text-primary mb-3">
               <i class="bi bi-list-check me-2"></i>
               Key Features
             </h3>
@@ -60,40 +60,48 @@
               <div class="col-md-6">
                 <ul class="list-unstyled">
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     Venue management with CRUD operations
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     Activity planning and scheduling
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     User registration & authentication
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     Local data persistence
+                  </li>
+                  <li class="mb-2">
+                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    Dynamic theme switching
                   </li>
                 </ul>
               </div>
               <div class="col-md-6">
                 <ul class="list-unstyled">
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     Mobile-responsive design
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     Form validation and error handling
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     TypeScript support
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-success me-2"></i>
+                    <i class="bi bi-check-circle text-primary me-2"></i>
                     Modern ES6+ JavaScript
+                  </li>
+                  <li class="mb-2">
+                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    Customizable user profiles
                   </li>
                 </ul>
               </div>
@@ -105,7 +113,7 @@
           <div class="col-md-6">
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body">
-                <h4 class="card-title text-success">
+                <h4 class="card-title text-primary">
                   <i class="bi bi-shield-check me-2"></i>
                   Privacy First
                 </h4>
@@ -119,7 +127,7 @@
           <div class="col-md-6">
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body">
-                <h4 class="card-title text-success">
+                <h4 class="card-title text-primary">
                   <i class="bi bi-wifi-off me-2"></i>
                   Offline Ready
                 </h4>

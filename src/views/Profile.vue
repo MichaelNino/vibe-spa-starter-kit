@@ -3,10 +3,10 @@
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6">
         <div class="text-center mb-4">
-          <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
-            <i class="bi bi-person-circle text-success" style="font-size: 4rem;"></i>
+          <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+            <i class="bi bi-person-circle text-primary" style="font-size: 4rem;"></i>
           </div>
-          <h1 class="h3 text-success fw-bold">User Profile</h1>
+          <h1 class="h3 text-primary fw-bold">User Profile</h1>
           <p class="text-muted">Manage your account information</p>
         </div>
 
@@ -20,7 +20,7 @@
               <button
                 v-if="!editMode"
                 @click="enableEdit"
-                class="btn btn-outline-success btn-sm"
+                class="btn btn-outline-primary btn-sm"
               >
                 <i class="bi bi-pencil me-1"></i>
                 Edit
@@ -88,19 +88,62 @@
                 </div>
               </div>
 
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors.phone }"
+                    id="phone"
+                    v-model="form.phone"
+                    required
+                  >
+                  <div class="invalid-feedback" v-if="errors.phone">
+                    {{ errors.phone }}
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="gender" class="form-label fw-semibold">Gender</label>
+                  <select
+                    class="form-select"
+                    :class="{ 'is-invalid': errors.gender }"
+                    id="gender"
+                    v-model="form.gender"
+                    required
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                  </select>
+                  <div class="invalid-feedback" v-if="errors.gender">
+                    {{ errors.gender }}
+                  </div>
+                </div>
+              </div>
+
               <div class="mb-4">
-                <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                <input
-                  type="tel"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors.phone }"
-                  id="phone"
-                  v-model="form.phone"
+                <label for="theme" class="form-label fw-semibold">Theme</label>
+                <select
+                  class="form-select"
+                  :class="{ 'is-invalid': errors.theme }"
+                  id="theme"
+                  v-model="form.theme"
+                  @change="previewTheme"
                   required
                 >
-                <div class="invalid-feedback" v-if="errors.phone">
-                  {{ errors.phone }}
+                  <option value="Green">Green</option>
+                  <option value="Blue">Blue</option>
+                  <option value="Pink">Pink</option>
+                  <option value="Purple">Purple</option>
+                  <option value="Red">Red</option>
+                </select>
+                <div class="invalid-feedback" v-if="errors.theme">
+                  {{ errors.theme }}
                 </div>
+                <small class="text-muted">Changes will be applied immediately</small>
               </div>
 
               <div class="alert alert-danger" v-if="updateError" role="alert">
@@ -116,7 +159,7 @@
               <div class="d-flex gap-2">
                 <button
                   type="submit"
-                  class="btn btn-success"
+                  class="btn btn-primary"
                   :disabled="loading"
                 >
                   <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -153,9 +196,23 @@
                   <strong class="text-muted d-block small">Email</strong>
                   <p class="mb-2">{{ user?.email }}</p>
                 </div>
-                <div class="col-12">
+                <div class="col-md-6">
                   <strong class="text-muted d-block small">Phone</strong>
-                  <p class="mb-0">{{ user?.phone }}</p>
+                  <p class="mb-2">{{ user?.phone }}</p>
+                </div>
+                <div class="col-md-6">
+                  <strong class="text-muted d-block small">Gender</strong>
+                  <p class="mb-2">{{ user?.gender }}</p>
+                </div>
+                <div class="col-12">
+                  <strong class="text-muted d-block small">Theme</strong>
+                  <div class="d-flex align-items-center">
+                    <div 
+                      class="rounded-circle me-2" 
+                      :style="{ backgroundColor: getThemeColor(user?.theme), width: '20px', height: '20px' }"
+                    ></div>
+                    <span>{{ user?.theme }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,14 +258,18 @@ const form = reactive({
   lastName: '',
   username: '',
   email: '',
-  phone: ''
+  phone: '',
+  gender: 'Prefer not to say',
+  theme: 'Green'
 });
 
 const errors = reactive({
   firstName: '',
   lastName: '',
   email: '',
-  phone: ''
+  phone: '',
+  gender: '',
+  theme: ''
 });
 
 onMounted(async () => {
@@ -227,6 +288,8 @@ const populateForm = () => {
     form.username = user.value.username;
     form.email = user.value.email;
     form.phone = user.value.phone;
+    form.gender = user.value.gender || 'Prefer not to say';
+    form.theme = user.value.theme || 'Green';
   }
 };
 
@@ -243,6 +306,17 @@ const cancelEdit = () => {
   Object.keys(errors).forEach(key => {
     errors[key as keyof typeof errors] = '';
   });
+};
+
+const previewTheme = () => {
+  if (form.theme) {
+    const themeColor = db.getThemeColor(form.theme);
+    document.documentElement.style.setProperty('--primary-color', themeColor);
+  }
+};
+
+const getThemeColor = (theme?: string) => {
+  return db.getThemeColor(theme || 'Green');
 };
 
 const validateForm = (): boolean => {
@@ -275,6 +349,16 @@ const validateForm = (): boolean => {
     errors.phone = 'Phone number is required';
     isValid = false;
   }
+
+  if (!form.gender) {
+    errors.gender = 'Gender is required';
+    isValid = false;
+  }
+
+  if (!form.theme) {
+    errors.theme = 'Theme is required';
+    isValid = false;
+  }
   
   return isValid;
 };
@@ -293,7 +377,9 @@ const handleUpdate = async () => {
       firstName: form.firstName,
       lastName: form.lastName,
       email: form.email,
-      phone: form.phone
+      phone: form.phone,
+      gender: form.gender as 'Male' | 'Female' | 'Other' | 'Prefer not to say',
+      theme: form.theme as 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red'
     });
     
     if (result.success) {
@@ -322,7 +408,7 @@ const handleLogout = () => {
 }
 
 .form-control:focus {
-  border-color: #198754;
+  border-color: var(--primary-color, #198754);
   box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 </style>

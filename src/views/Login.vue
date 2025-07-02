@@ -5,7 +5,7 @@
         <div class="card shadow-lg border-0">
           <div class="card-body p-5">
             <div class="text-center mb-4">
-              <h1 class="h3 text-success fw-bold">
+              <h1 class="h3 text-primary fw-bold">
                 <i class="bi bi-box-arrow-in-right me-2"></i>
                 Sign In
               </h1>
@@ -70,7 +70,7 @@
               <div class="d-grid mb-4">
                 <button
                   type="submit"
-                  class="btn btn-success btn-lg"
+                  class="btn btn-primary btn-lg"
                   :disabled="loading"
                 >
                   <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -82,7 +82,7 @@
               <div class="text-center">
                 <p class="text-muted">
                   Don't have an account?
-                  <router-link to="/register" class="text-decoration-none text-success">
+                  <router-link to="/register" class="text-decoration-none text-primary">
                     Create one here
                   </router-link>
                 </p>
@@ -167,7 +167,7 @@ const handleLogin = async () => {
 }
 
 .form-control:focus {
-  border-color: #198754;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 
