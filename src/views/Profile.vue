@@ -111,12 +111,11 @@
                     :class="{ 'is-invalid': errors.gender }"
                     id="gender"
                     v-model="form.gender"
+                    @change="updateBrandPreview"
                     required
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
                   </select>
                   <div class="invalid-feedback" v-if="errors.gender">
                     {{ errors.gender }}
@@ -144,6 +143,13 @@
                   {{ errors.theme }}
                 </div>
                 <small class="text-muted">Changes will be applied immediately</small>
+              </div>
+
+              <div class="mb-3" v-if="form.gender">
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-2"></i>
+                  Your app will be branded as: <strong>{{ getBrandPreview() }}</strong>
+                </div>
               </div>
 
               <div class="alert alert-danger" v-if="updateError" role="alert">
@@ -214,6 +220,10 @@
                     <span>{{ user?.theme }}</span>
                   </div>
                 </div>
+                <div class="col-12">
+                  <strong class="text-muted d-block small">App Branding</strong>
+                  <p class="mb-0">{{ getBrandName() }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -259,7 +269,7 @@ const form = reactive({
   username: '',
   email: '',
   phone: '',
-  gender: 'Prefer not to say',
+  gender: 'Male',
   theme: 'Green'
 });
 
@@ -288,7 +298,7 @@ const populateForm = () => {
     form.username = user.value.username;
     form.email = user.value.email;
     form.phone = user.value.phone;
-    form.gender = user.value.gender || 'Prefer not to say';
+    form.gender = user.value.gender || 'Male';
     form.theme = user.value.theme || 'Green';
   }
 };
@@ -313,6 +323,18 @@ const previewTheme = () => {
     const themeColor = db.getThemeColor(form.theme);
     document.documentElement.style.setProperty('--primary-color', themeColor);
   }
+};
+
+const updateBrandPreview = () => {
+  // This will trigger the brand preview in the template
+};
+
+const getBrandPreview = () => {
+  return form.gender === 'Female' ? 'Queen of the Hill' : 'King of the Hill';
+};
+
+const getBrandName = () => {
+  return user.value?.gender === 'Female' ? 'Queen of the Hill' : 'King of the Hill';
 };
 
 const getThemeColor = (theme?: string) => {
@@ -378,7 +400,7 @@ const handleUpdate = async () => {
       lastName: form.lastName,
       email: form.email,
       phone: form.phone,
-      gender: form.gender as 'Male' | 'Female' | 'Other' | 'Prefer not to say',
+      gender: form.gender as 'Male' | 'Female',
       theme: form.theme as 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red'
     });
     

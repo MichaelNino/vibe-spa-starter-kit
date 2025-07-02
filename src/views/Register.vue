@@ -118,13 +118,12 @@
                     :class="{ 'is-invalid': errors.gender }"
                     id="gender"
                     v-model="form.gender"
+                    @change="updateBrandPreview"
                     required
                   >
                     <option value="">Select gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
                   </select>
                   <div class="invalid-feedback" v-if="errors.gender">
                     {{ errors.gender }}
@@ -153,6 +152,13 @@
                   {{ errors.theme }}
                 </div>
                 <small class="text-muted">This will be your app's primary color theme</small>
+              </div>
+
+              <div class="mb-3" v-if="form.gender">
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle me-2"></i>
+                  Your app will be branded as: <strong>{{ getBrandPreview() }}</strong>
+                </div>
               </div>
 
               <div class="mb-3">
@@ -263,7 +269,7 @@ const form = reactive<UserRegistration>({
   username: '',
   email: '',
   phone: '',
-  gender: 'Prefer not to say',
+  gender: 'Male',
   theme: 'Green',
   password: ''
 });
@@ -293,6 +299,14 @@ const previewTheme = () => {
     const themeColor = db.getThemeColor(form.theme);
     document.documentElement.style.setProperty('--primary-color', themeColor);
   }
+};
+
+const updateBrandPreview = () => {
+  // This will trigger the brand preview in the template
+};
+
+const getBrandPreview = () => {
+  return form.gender === 'Female' ? 'Queen of the Hill' : 'King of the Hill';
 };
 
 const validateForm = (): boolean => {
