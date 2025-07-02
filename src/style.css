@@ -47,8 +47,8 @@ body {
 
 /* Form enhancements */
 .form-control:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 
 .input-group-text {
@@ -65,6 +65,26 @@ body {
   transform: translateY(-1px);
 }
 
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}
+
+.btn-outline-success {
+  color: #198754;
+  border-color: #198754;
+}
+
+.btn-outline-success:hover {
+  background-color: #198754;
+  border-color: #198754;
+}
+
 /* Card animations */
 .card {
   transition: transform 0.2s ease-in-out;
@@ -79,6 +99,27 @@ body {
 .spinner-border-sm {
   width: 1rem;
   height: 1rem;
+}
+
+/* Text colors */
+.text-success {
+  color: #198754 !important;
+}
+
+/* Badge colors */
+.badge.bg-success {
+  background-color: #198754 !important;
+}
+
+.bg-success.bg-opacity-10 {
+  background-color: rgba(25, 135, 84, 0.1) !important;
+}
+
+/* Alert colors */
+.alert-success {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
 }
 
 /* Mobile optimizations */
@@ -103,3 +144,4 @@ body {
     display: none !important;
   }
 }
+</style>

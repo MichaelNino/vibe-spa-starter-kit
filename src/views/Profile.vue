@@ -3,10 +3,10 @@
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6">
         <div class="text-center mb-4">
-          <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
-            <i class="bi bi-person-circle text-primary" style="font-size: 4rem;"></i>
+          <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+            <i class="bi bi-person-circle text-success" style="font-size: 4rem;"></i>
           </div>
-          <h1 class="h3 text-primary fw-bold">User Profile</h1>
+          <h1 class="h3 text-success fw-bold">User Profile</h1>
           <p class="text-muted">Manage your account information</p>
         </div>
 
@@ -20,7 +20,7 @@
               <button
                 v-if="!editMode"
                 @click="enableEdit"
-                class="btn btn-outline-primary btn-sm"
+                class="btn btn-outline-success btn-sm"
               >
                 <i class="bi bi-pencil me-1"></i>
                 Edit
@@ -116,7 +116,7 @@
               <div class="d-flex gap-2">
                 <button
                   type="submit"
-                  class="btn btn-primary"
+                  class="btn btn-success"
                   :disabled="loading"
                 >
                   <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -322,7 +322,7 @@ const handleLogout = () => {
 }
 
 .form-control:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 </style>

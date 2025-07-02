@@ -4,10 +4,10 @@
       <div class="row align-items-center">
         <div class="col-md-6">
           <div class="d-flex align-items-center">
-            <i class="bi bi-app text-primary me-2" style="font-size: 1.5rem;"></i>
+            <i class="bi bi-mountain text-success me-2" style="font-size: 1.5rem;"></i>
             <div>
-              <h6 class="mb-0">Vue Bootstrap PouchDB SPA</h6>
-              <small class="text-muted">Built with modern web technologies</small>
+              <h6 class="mb-0">King of the Hill</h6>
+              <small class="text-muted">Venue and activity management platform</small>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-12 text-center">
           <small class="text-muted">
-            © {{ currentYear }} Vue SPA Demo. All data stored locally in your browser.
+            © {{ currentYear }} King of the Hill. All data stored locally in your browser.
           </small>
         </div>
       </div>

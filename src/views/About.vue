@@ -3,18 +3,18 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="text-center mb-5">
-          <h1 class="display-4 fw-bold text-primary mb-3">
+          <h1 class="display-4 fw-bold text-success mb-3">
             <i class="bi bi-info-circle me-3"></i>
-            About This App
+            About King of the Hill
           </h1>
           <p class="lead text-muted">
-            A modern single-page application built with cutting-edge web technologies
+            A comprehensive venue and activity management platform built with modern web technologies
           </p>
         </div>
 
         <div class="card shadow-lg border-0 mb-5">
           <div class="card-body p-5">
-            <h2 class="h3 text-primary mb-4">
+            <h2 class="h3 text-success mb-4">
               <i class="bi bi-gear me-2"></i>
               Technology Stack
             </h2>
@@ -51,7 +51,7 @@
               </div>
             </div>
 
-            <h3 class="h4 text-primary mb-3">
+            <h3 class="h4 text-success mb-3">
               <i class="bi bi-list-check me-2"></i>
               Key Features
             </h3>
@@ -61,11 +61,11 @@
                 <ul class="list-unstyled">
                   <li class="mb-2">
                     <i class="bi bi-check-circle text-success me-2"></i>
-                    Single Page Application (SPA)
+                    Venue management with CRUD operations
                   </li>
                   <li class="mb-2">
                     <i class="bi bi-check-circle text-success me-2"></i>
-                    Client-side routing
+                    Activity planning and scheduling
                   </li>
                   <li class="mb-2">
                     <i class="bi bi-check-circle text-success me-2"></i>
@@ -85,7 +85,7 @@
                   </li>
                   <li class="mb-2">
                     <i class="bi bi-check-circle text-success me-2"></i>
-                    Form validation
+                    Form validation and error handling
                   </li>
                   <li class="mb-2">
                     <i class="bi bi-check-circle text-success me-2"></i>
@@ -105,7 +105,7 @@
           <div class="col-md-6">
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body">
-                <h4 class="card-title text-primary">
+                <h4 class="card-title text-success">
                   <i class="bi bi-shield-check me-2"></i>
                   Privacy First
                 </h4>
@@ -119,7 +119,7 @@
           <div class="col-md-6">
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body">
-                <h4 class="card-title text-primary">
+                <h4 class="card-title text-success">
                   <i class="bi bi-wifi-off me-2"></i>
                   Offline Ready
                 </h4>

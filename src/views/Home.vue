@@ -3,12 +3,12 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="text-center mb-5">
-          <h1 class="display-4 fw-bold text-primary mb-3">
-            <i class="bi bi-house-door me-3"></i>
-            Welcome Home
+          <h1 class="display-4 fw-bold text-success mb-3">
+            <i class="bi bi-mountain me-3"></i>
+            King of the Hill
           </h1>
           <p class="lead text-muted">
-            Your personal dashboard powered by Vue 3, Bootstrap 5, and PouchDB
+            Your ultimate venue and activity management platform
           </p>
         </div>
 
@@ -16,10 +16,22 @@
           <div class="col-md-6">
             <div class="card h-100 shadow-sm hover-shadow">
               <div class="card-body text-center">
-                <i class="bi bi-person-circle text-primary" style="font-size: 3rem;"></i>
-                <h5 class="card-title mt-3">User Management</h5>
+                <i class="bi bi-building text-success" style="font-size: 3rem;"></i>
+                <h5 class="card-title mt-3">Venue Management</h5>
                 <p class="card-text text-muted">
-                  Secure local user registration and authentication
+                  Create and manage your venues with detailed information and amenities
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm hover-shadow">
+              <div class="card-body text-center">
+                <i class="bi bi-calendar-event text-success" style="font-size: 3rem;"></i>
+                <h5 class="card-title mt-3">Activity Planning</h5>
+                <p class="card-text text-muted">
+                  Organize activities and events with scheduling and participant management
                 </p>
               </div>
             </div>
@@ -31,7 +43,7 @@
                 <i class="bi bi-database text-success" style="font-size: 3rem;"></i>
                 <h5 class="card-title mt-3">Local Storage</h5>
                 <p class="card-text text-muted">
-                  All data stored locally using PouchDB
+                  All data stored securely in your browser using PouchDB
                 </p>
               </div>
             </div>
@@ -40,22 +52,10 @@
           <div class="col-md-6">
             <div class="card h-100 shadow-sm hover-shadow">
               <div class="card-body text-center">
-                <i class="bi bi-phone text-info" style="font-size: 3rem;"></i>
+                <i class="bi bi-phone text-success" style="font-size: 3rem;"></i>
                 <h5 class="card-title mt-3">Mobile Ready</h5>
                 <p class="card-text text-muted">
-                  Fully responsive design for all devices
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="card h-100 shadow-sm hover-shadow">
-              <div class="card-body text-center">
-                <i class="bi bi-lightning text-warning" style="font-size: 3rem;"></i>
-                <h5 class="card-title mt-3">Fast & Modern</h5>
-                <p class="card-text text-muted">
-                  Built with Vue 3 and Vite for optimal performance
+                  Fully responsive design optimized for all devices
                 </p>
               </div>
             </div>
@@ -65,11 +65,11 @@
         <div class="text-center mt-5" v-if="!isLoggedIn">
           <h3 class="mb-3">Get Started</h3>
           <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-            <router-link to="/register" class="btn btn-primary btn-lg">
+            <router-link to="/register" class="btn btn-success btn-lg">
               <i class="bi bi-person-plus me-2"></i>
               Create Account
             </router-link>
-            <router-link to="/login" class="btn btn-outline-primary btn-lg">
+            <router-link to="/login" class="btn btn-outline-success btn-lg">
               <i class="bi bi-box-arrow-in-right me-2"></i>
               Sign In
             </router-link>
@@ -81,10 +81,16 @@
             <i class="bi bi-check-circle me-2"></i>
             Welcome back, {{ currentUser?.firstName }}!
           </div>
-          <router-link to="/profile" class="btn btn-primary btn-lg">
-            <i class="bi bi-person me-2"></i>
-            View Profile
-          </router-link>
+          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+            <router-link to="/venues" class="btn btn-success btn-lg">
+              <i class="bi bi-building me-2"></i>
+              Manage Venues
+            </router-link>
+            <router-link to="/activities" class="btn btn-outline-success btn-lg">
+              <i class="bi bi-calendar-event me-2"></i>
+              Plan Activities
+            </router-link>
+          </div>
         </div>
       </div>
     </div>

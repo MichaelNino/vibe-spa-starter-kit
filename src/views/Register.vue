@@ -5,7 +5,7 @@
         <div class="card shadow-lg border-0">
           <div class="card-body p-5">
             <div class="text-center mb-4">
-              <h1 class="h3 text-primary fw-bold">
+              <h1 class="h3 text-success fw-bold">
                 <i class="bi bi-person-plus me-2"></i>
                 Create Account
               </h1>
@@ -179,7 +179,7 @@
               <div class="d-grid mb-4">
                 <button
                   type="submit"
-                  class="btn btn-primary btn-lg"
+                  class="btn btn-success btn-lg"
                   :disabled="loading"
                 >
                   <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -191,7 +191,7 @@
               <div class="text-center">
                 <p class="text-muted">
                   Already have an account?
-                  <router-link to="/login" class="text-decoration-none">
+                  <router-link to="/login" class="text-decoration-none text-success">
                     Sign in here
                   </router-link>
                 </p>
@@ -331,8 +331,8 @@ const handleRegister = async () => {
 }
 
 .form-control:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 
 .input-group-text {
