@@ -3,7 +3,7 @@
     <div class="container">
       <router-link class="navbar-brand fw-bold text-primary" to="/">
         <i class="bi bi-mountain me-2"></i>
-        King of the Hill
+        {{ brandName }}
       </router-link>
 
       <button
@@ -133,20 +133,31 @@ const router = useRouter();
 
 const isLoggedIn = ref(false);
 const currentUser = ref<User | null>(null);
+const brandName = ref('King of the Hill');
 
 const checkAuthStatus = async () => {
   currentUser.value = await db.loadCurrentUser();
   isLoggedIn.value = db.isLoggedIn();
+  brandName.value = db.getBrandName();
 };
 
 const handleLogout = () => {
   db.logout();
   isLoggedIn.value = false;
   currentUser.value = null;
+  brandName.value = 'King of the Hill';
   router.push('/');
 };
 
-onMounted(checkAuthStatus);
+const handleBrandNameChange = (event: CustomEvent) => {
+  brandName.value = event.detail;
+};
+
+onMounted(() => {
+  checkAuthStatus();
+  // Listen for brand name changes
+  window.addEventListener('brandNameChanged', handleBrandNameChange as EventListener);
+});
 
 // Watch for route changes to update auth status
 watch(route, checkAuthStatus);

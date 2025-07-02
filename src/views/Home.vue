@@ -5,7 +5,7 @@
         <div class="text-center mb-5">
           <h1 class="display-4 fw-bold text-primary mb-3">
             <i class="bi bi-mountain me-3"></i>
-            King of the Hill
+            {{ brandName }}
           </h1>
           <p class="lead text-muted">
             Your ultimate venue and activity management platform
@@ -104,10 +104,19 @@ import type { User } from '../types/user';
 
 const isLoggedIn = ref(false);
 const currentUser = ref<User | null>(null);
+const brandName = ref('King of the Hill');
+
+const handleBrandNameChange = (event: CustomEvent) => {
+  brandName.value = event.detail;
+};
 
 onMounted(async () => {
   currentUser.value = await db.loadCurrentUser();
   isLoggedIn.value = db.isLoggedIn();
+  brandName.value = db.getBrandName();
+  
+  // Listen for brand name changes
+  window.addEventListener('brandNameChanged', handleBrandNameChange as EventListener);
 });
 </script>
 

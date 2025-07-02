@@ -6,7 +6,7 @@ export interface User {
   username: string;
   email: string;
   phone: string;
-  gender: 'Male' | 'Female' | 'Other' | 'Prefer not to say';
+  gender: 'Male' | 'Female';
   theme: 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red';
   password?: string;
   createdAt: Date;
@@ -23,6 +23,6 @@ export interface UserRegistration extends UserCredentials {
   lastName: string;
   email: string;
   phone: string;
-  gender: 'Male' | 'Female' | 'Other' | 'Prefer not to say';
+  gender: 'Male' | 'Female';
   theme: 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red';
 }

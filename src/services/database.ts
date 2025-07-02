@@ -76,8 +76,9 @@ class DatabaseService {
       this.currentUser = user;
       localStorage.setItem('currentUser', JSON.stringify({ username: user.username }));
 
-      // Apply user's theme
+      // Apply user's theme and brand name
       this.applyTheme(user.theme);
+      this.updateBrandName(user.gender);
 
       // Remove password from returned user object
       const { password, ...userWithoutPassword } = user;
@@ -111,6 +112,11 @@ class DatabaseService {
       // Apply theme if it was updated
       if (updatedData.theme) {
         this.applyTheme(updatedData.theme);
+      }
+
+      // Update brand name if gender was updated
+      if (updatedData.gender) {
+        this.updateBrandName(updatedData.gender);
       }
 
       // Remove password from returned user object
@@ -152,8 +158,9 @@ class DatabaseService {
       const { username } = JSON.parse(stored);
       this.currentUser = await this.findUserByUsername(username);
       if (this.currentUser) {
-        // Apply user's theme on load
+        // Apply user's theme and brand name on load
         this.applyTheme(this.currentUser.theme);
+        this.updateBrandName(this.currentUser.gender);
       }
       return this.currentUser;
     }
@@ -163,8 +170,9 @@ class DatabaseService {
   logout(): void {
     this.currentUser = null;
     localStorage.removeItem('currentUser');
-    // Reset to default theme
+    // Reset to default theme and brand name
     this.applyTheme('Green');
+    this.updateBrandName('Male'); // Default to King of the Hill
   }
 
   isLoggedIn(): boolean {
@@ -187,6 +195,20 @@ class DatabaseService {
     
     // Store theme preference
     localStorage.setItem('userTheme', theme);
+  }
+
+  private updateBrandName(gender: 'Male' | 'Female'): void {
+    const brandName = gender === 'Female' ? 'Queen of the Hill' : 'King of the Hill';
+    
+    // Store brand name preference
+    localStorage.setItem('brandName', brandName);
+    
+    // Dispatch custom event to notify components of brand name change
+    window.dispatchEvent(new CustomEvent('brandNameChanged', { detail: brandName }));
+  }
+
+  getBrandName(): string {
+    return localStorage.getItem('brandName') || 'King of the Hill';
   }
 
   getThemeColor(theme: string): string {

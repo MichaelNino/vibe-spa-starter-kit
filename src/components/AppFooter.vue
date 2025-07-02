@@ -4,9 +4,9 @@
       <div class="row align-items-center">
         <div class="col-md-6">
           <div class="d-flex align-items-center">
-            <i class="bi bi-mountain text-success me-2" style="font-size: 1.5rem;"></i>
+            <i class="bi bi-mountain text-primary me-2" style="font-size: 1.5rem;"></i>
             <div>
-              <h6 class="mb-0">King of the Hill</h6>
+              <h6 class="mb-0">{{ brandName }}</h6>
               <small class="text-muted">Venue and activity management platform</small>
             </div>
           </div>
@@ -15,7 +15,7 @@
           <div class="d-flex justify-content-md-end justify-content-center align-items-center">
             <span class="me-3">Powered by:</span>
             <div class="d-flex gap-2">
-              <span class="badge bg-success">Vue 3</span>
+              <span class="badge bg-primary">Vue 3</span>
               <span class="badge bg-primary">Bootstrap 5</span>
               <span class="badge bg-warning text-dark">PouchDB</span>
             </div>
@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-12 text-center">
           <small class="text-muted">
-            © {{ currentYear }} King of the Hill. All data stored locally in your browser.
+            © {{ currentYear }} {{ brandName }}. All data stored locally in your browser.
           </small>
         </div>
       </div>
@@ -35,9 +35,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { db } from '../services/database';
 
 const currentYear = computed(() => new Date().getFullYear());
+const brandName = ref('King of the Hill');
+
+const handleBrandNameChange = (event: CustomEvent) => {
+  brandName.value = event.detail;
+};
+
+onMounted(() => {
+  brandName.value = db.getBrandName();
+  // Listen for brand name changes
+  window.addEventListener('brandNameChanged', handleBrandNameChange as EventListener);
+});
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@
         <div class="text-center mb-5">
           <h1 class="display-4 fw-bold text-primary mb-3">
             <i class="bi bi-info-circle me-3"></i>
-            About King of the Hill
+            About {{ brandName }}
           </h1>
           <p class="lead text-muted">
             A comprehensive venue and activity management platform built with modern web technologies
@@ -103,6 +103,10 @@
                     <i class="bi bi-check-circle text-primary me-2"></i>
                     Customizable user profiles
                   </li>
+                  <li class="mb-2">
+                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    Gender-based branding
+                  </li>
                 </ul>
               </div>
             </div>
@@ -144,7 +148,20 @@
 </template>
 
 <script setup lang="ts">
-// Component logic would go here if needed
+import { ref, onMounted } from 'vue';
+import { db } from '../services/database';
+
+const brandName = ref('King of the Hill');
+
+const handleBrandNameChange = (event: CustomEvent) => {
+  brandName.value = event.detail;
+};
+
+onMounted(() => {
+  brandName.value = db.getBrandName();
+  // Listen for brand name changes
+  window.addEventListener('brandNameChanged', handleBrandNameChange as EventListener);
+});
 </script>
 
 <style scoped>
