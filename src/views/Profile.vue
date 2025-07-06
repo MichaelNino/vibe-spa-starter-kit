@@ -22,6 +22,12 @@
           >
           <h1 class="h3 text-primary fw-bold">User Profile</h1>
           <p class="text-muted">Manage your account information</p>
+          <div v-if="user?.administrator" class="mb-2">
+            <span class="badge bg-warning text-dark">
+              <i class="bi bi-shield-check me-1"></i>
+              Administrator
+            </span>
+          </div>
         </div>
 
         <div class="card shadow-lg border-0 mb-4">
@@ -115,22 +121,58 @@
                 </div>
               </div>
 
+              <div class="mb-3">
+                <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors.phone }"
+                  id="phone"
+                  v-model="form.phone"
+                  required
+                >
+                <div class="invalid-feedback" v-if="errors.phone">
+                  {{ errors.phone }}
+                </div>
+              </div>
+
               <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                  <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                  <label for="city" class="form-label fw-semibold">City</label>
                   <input
-                    type="tel"
+                    type="text"
                     class="form-control"
-                    :class="{ 'is-invalid': errors.phone }"
-                    id="phone"
-                    v-model="form.phone"
+                    :class="{ 'is-invalid': errors.city }"
+                    id="city"
+                    v-model="form.city"
                     required
                   >
-                  <div class="invalid-feedback" v-if="errors.phone">
-                    {{ errors.phone }}
+                  <div class="invalid-feedback" v-if="errors.city">
+                    {{ errors.city }}
                   </div>
                 </div>
 
+                <div class="col-md-6">
+                  <label for="state" class="form-label fw-semibold">State</label>
+                  <select
+                    class="form-select"
+                    :class="{ 'is-invalid': errors.state }"
+                    id="state"
+                    v-model="form.state"
+                    required
+                  >
+                    <option value="">Select state</option>
+                    <option v-for="state in US_STATES" :key="state.abbreviation" :value="state.abbreviation">
+                      {{ state.name }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" v-if="errors.state">
+                    {{ errors.state }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
                 <div class="col-md-6">
                   <label for="gender" class="form-label fw-semibold">Gender</label>
                   <select
@@ -148,28 +190,44 @@
                     {{ errors.gender }}
                   </div>
                 </div>
+
+                <div class="col-md-6">
+                  <label for="theme" class="form-label fw-semibold">Theme</label>
+                  <select
+                    class="form-select"
+                    :class="{ 'is-invalid': errors.theme }"
+                    id="theme"
+                    v-model="form.theme"
+                    @change="previewTheme"
+                    required
+                  >
+                    <option value="Green">Green</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Purple">Purple</option>
+                    <option value="Red">Red</option>
+                  </select>
+                  <div class="invalid-feedback" v-if="errors.theme">
+                    {{ errors.theme }}
+                  </div>
+                  <small class="text-muted">Changes will be applied immediately</small>
+                </div>
               </div>
 
-              <div class="mb-4">
-                <label for="theme" class="form-label fw-semibold">Theme</label>
-                <select
-                  class="form-select"
-                  :class="{ 'is-invalid': errors.theme }"
-                  id="theme"
-                  v-model="form.theme"
-                  @change="previewTheme"
-                  required
-                >
-                  <option value="Green">Green</option>
-                  <option value="Blue">Blue</option>
-                  <option value="Pink">Pink</option>
-                  <option value="Purple">Purple</option>
-                  <option value="Red">Red</option>
-                </select>
-                <div class="invalid-feedback" v-if="errors.theme">
-                  {{ errors.theme }}
+              <div class="mb-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="administrator"
+                    v-model="form.administrator"
+                  >
+                  <label class="form-check-label fw-semibold" for="administrator">
+                    <i class="bi bi-shield-check me-2"></i>
+                    Administrator Account
+                  </label>
+                  <div class="form-text">Check this box if you need administrative privileges</div>
                 </div>
-                <small class="text-muted">Changes will be applied immediately</small>
               </div>
 
               <div class="mb-3" v-if="form.gender">
@@ -234,8 +292,22 @@
                   <p class="mb-2">{{ user?.phone }}</p>
                 </div>
                 <div class="col-md-6">
+                  <strong class="text-muted d-block small">Location</strong>
+                  <p class="mb-2">{{ user?.city }}, {{ getStateName(user?.state || '') }}</p>
+                </div>
+                <div class="col-md-6">
                   <strong class="text-muted d-block small">Gender</strong>
                   <p class="mb-2">{{ user?.gender }}</p>
+                </div>
+                <div class="col-md-6">
+                  <strong class="text-muted d-block small">Administrator</strong>
+                  <p class="mb-2">
+                    <span v-if="user?.administrator" class="badge bg-warning text-dark">
+                      <i class="bi bi-shield-check me-1"></i>
+                      Yes
+                    </span>
+                    <span v-else class="text-muted">No</span>
+                  </p>
                 </div>
                 <div class="col-12">
                   <strong class="text-muted d-block small">Theme</strong>
@@ -280,6 +352,7 @@
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { db } from '../services/database';
+import { US_STATES, getStateName } from '../utils/states';
 import UserAvatar from '../components/UserAvatar.vue';
 import type { User } from '../types/user';
 
@@ -299,8 +372,11 @@ const form = reactive({
   username: '',
   email: '',
   phone: '',
+  city: '',
+  state: '',
   gender: 'Male',
   theme: 'Green',
+  administrator: false,
   avatar: ''
 });
 
@@ -309,6 +385,8 @@ const errors = reactive({
   lastName: '',
   email: '',
   phone: '',
+  city: '',
+  state: '',
   gender: '',
   theme: ''
 });
@@ -329,8 +407,11 @@ const populateForm = () => {
     form.username = user.value.username;
     form.email = user.value.email;
     form.phone = user.value.phone;
+    form.city = user.value.city || '';
+    form.state = user.value.state || '';
     form.gender = user.value.gender || 'Male';
     form.theme = user.value.theme || 'Green';
+    form.administrator = user.value.administrator || false;
     form.avatar = user.value.avatar || '';
     avatarPreview.value = user.value.avatar ? `data:image/png;base64,${user.value.avatar}` : '';
   }
@@ -448,6 +529,16 @@ const validateForm = (): boolean => {
     isValid = false;
   }
 
+  if (!form.city.trim()) {
+    errors.city = 'City is required';
+    isValid = false;
+  }
+
+  if (!form.state) {
+    errors.state = 'State is required';
+    isValid = false;
+  }
+
   if (!form.gender) {
     errors.gender = 'Gender is required';
     isValid = false;
@@ -476,8 +567,11 @@ const handleUpdate = async () => {
       lastName: form.lastName,
       email: form.email,
       phone: form.phone,
+      city: form.city,
+      state: form.state,
       gender: form.gender as 'Male' | 'Female',
-      theme: form.theme as 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red'
+      theme: form.theme as 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red',
+      administrator: form.administrator
     };
     
     // Only include avatar if it has been changed

@@ -89,28 +89,65 @@
                 </div>
               </div>
 
+              <div class="mb-3">
+                <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-telephone"></i>
+                  </span>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors.phone }"
+                    id="phone"
+                    v-model="form.phone"
+                    placeholder="(555) 123-4567"
+                    required
+                  >
+                  <div class="invalid-feedback" v-if="errors.phone">
+                    {{ errors.phone }}
+                  </div>
+                </div>
+              </div>
+
               <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                  <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                  <div class="input-group">
-                    <span class="input-group-text">
-                      <i class="bi bi-telephone"></i>
-                    </span>
-                    <input
-                      type="tel"
-                      class="form-control"
-                      :class="{ 'is-invalid': errors.phone }"
-                      id="phone"
-                      v-model="form.phone"
-                      placeholder="(555) 123-4567"
-                      required
-                    >
-                    <div class="invalid-feedback" v-if="errors.phone">
-                      {{ errors.phone }}
-                    </div>
+                  <label for="city" class="form-label fw-semibold">City</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors.city }"
+                    id="city"
+                    v-model="form.city"
+                    placeholder="Your city"
+                    required
+                  >
+                  <div class="invalid-feedback" v-if="errors.city">
+                    {{ errors.city }}
                   </div>
                 </div>
 
+                <div class="col-md-6">
+                  <label for="state" class="form-label fw-semibold">State</label>
+                  <select
+                    class="form-select"
+                    :class="{ 'is-invalid': errors.state }"
+                    id="state"
+                    v-model="form.state"
+                    required
+                  >
+                    <option value="">Select state</option>
+                    <option v-for="state in US_STATES" :key="state.abbreviation" :value="state.abbreviation">
+                      {{ state.name }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" v-if="errors.state">
+                    {{ errors.state }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
                 <div class="col-md-6">
                   <label for="gender" class="form-label fw-semibold">Gender</label>
                   <select
@@ -129,29 +166,44 @@
                     {{ errors.gender }}
                   </div>
                 </div>
+
+                <div class="col-md-6">
+                  <label for="theme" class="form-label fw-semibold">Preferred Theme</label>
+                  <select
+                    class="form-select"
+                    :class="{ 'is-invalid': errors.theme }"
+                    id="theme"
+                    v-model="form.theme"
+                    @change="previewTheme"
+                    required
+                  >
+                    <option value="">Select theme</option>
+                    <option value="Green">Green</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Purple">Purple</option>
+                    <option value="Red">Red</option>
+                  </select>
+                  <div class="invalid-feedback" v-if="errors.theme">
+                    {{ errors.theme }}
+                  </div>
+                </div>
               </div>
 
               <div class="mb-3">
-                <label for="theme" class="form-label fw-semibold">Preferred Theme</label>
-                <select
-                  class="form-select"
-                  :class="{ 'is-invalid': errors.theme }"
-                  id="theme"
-                  v-model="form.theme"
-                  @change="previewTheme"
-                  required
-                >
-                  <option value="">Select theme</option>
-                  <option value="Green">Green</option>
-                  <option value="Blue">Blue</option>
-                  <option value="Pink">Pink</option>
-                  <option value="Purple">Purple</option>
-                  <option value="Red">Red</option>
-                </select>
-                <div class="invalid-feedback" v-if="errors.theme">
-                  {{ errors.theme }}
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="administrator"
+                    v-model="form.administrator"
+                  >
+                  <label class="form-check-label fw-semibold" for="administrator">
+                    <i class="bi bi-shield-check me-2"></i>
+                    Administrator Account
+                  </label>
+                  <div class="form-text">Check this box if you need administrative privileges</div>
                 </div>
-                <small class="text-muted">This will be your app's primary color theme</small>
               </div>
 
               <div class="mb-3" v-if="form.gender">
@@ -259,6 +311,7 @@
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { db } from '../services/database';
+import { US_STATES } from '../utils/states';
 import type { UserRegistration } from '../types/user';
 
 const router = useRouter();
@@ -269,8 +322,11 @@ const form = reactive<UserRegistration>({
   username: '',
   email: '',
   phone: '',
+  city: '',
+  state: '',
   gender: 'Male',
   theme: 'Green',
+  administrator: false,
   password: ''
 });
 
@@ -282,6 +338,8 @@ const errors = reactive({
   username: '',
   email: '',
   phone: '',
+  city: '',
+  state: '',
   gender: '',
   theme: '',
   password: '',
@@ -345,6 +403,16 @@ const validateForm = (): boolean => {
   
   if (!form.phone.trim()) {
     errors.phone = 'Phone number is required';
+    isValid = false;
+  }
+
+  if (!form.city.trim()) {
+    errors.city = 'City is required';
+    isValid = false;
+  }
+
+  if (!form.state) {
+    errors.state = 'State is required';
     isValid = false;
   }
 

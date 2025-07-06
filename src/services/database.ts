@@ -41,8 +41,11 @@ class DatabaseService {
         username: userData.username,
         email: userData.email,
         phone: userData.phone,
+        city: userData.city,
+        state: userData.state,
         gender: userData.gender,
         theme: userData.theme,
+        administrator: userData.administrator,
         password: userData.password, // In production, this should be hashed
         createdAt: new Date(),
         updatedAt: new Date()

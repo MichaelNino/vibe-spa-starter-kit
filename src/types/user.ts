@@ -6,8 +6,11 @@ export interface User {
   username: string;
   email: string;
   phone: string;
+  city: string;
+  state: string;
   gender: 'Male' | 'Female';
   theme: 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red';
+  administrator: boolean;
   avatar?: string; // Base64 encoded image
   password?: string;
   createdAt: Date;
@@ -24,6 +27,9 @@ export interface UserRegistration extends UserCredentials {
   lastName: string;
   email: string;
   phone: string;
+  city: string;
+  state: string;
   gender: 'Male' | 'Female';
   theme: 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red';
+  administrator: boolean;
 }
