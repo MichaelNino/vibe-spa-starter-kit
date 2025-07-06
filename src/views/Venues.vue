@@ -60,14 +60,31 @@
                   </small>
                 </div>
 
-                <div class="d-flex flex-wrap gap-1" v-if="venue.amenities.length > 0">
-                  <span v-for="amenity in venue.amenities.slice(0, 3)" :key="amenity" 
-                        class="badge bg-success bg-opacity-10 text-success">
-                    {{ amenity }}
-                  </span>
-                  <span v-if="venue.amenities.length > 3" class="badge bg-secondary">
-                    +{{ venue.amenities.length - 3 }} more
-                  </span>
+                <!-- Amenities Section -->
+                <div v-if="venue.amenities && venue.amenities.length > 0" class="amenities-section">
+                  <div class="d-flex flex-wrap gap-1">
+                    <span 
+                      v-for="(amenity, index) in venue.amenities.slice(0, 3)" 
+                      :key="`${venue._id}-amenity-${index}`" 
+                      class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25"
+                      style="font-size: 0.75rem;"
+                    >
+                      {{ amenity }}
+                    </span>
+                    <span 
+                      v-if="venue.amenities.length > 3" 
+                      class="badge bg-secondary"
+                      style="font-size: 0.75rem;"
+                    >
+                      +{{ venue.amenities.length - 3 }} more
+                    </span>
+                  </div>
+                </div>
+                
+                <!-- No amenities message -->
+                <div v-else class="text-muted small">
+                  <i class="bi bi-info-circle me-1"></i>
+                  No amenities listed
                 </div>
               </div>
             </div>
@@ -236,7 +253,7 @@
                       type="text"
                       class="form-control"
                       v-model="newAmenity"
-                      placeholder="Add amenity"
+                      placeholder="Add amenity (e.g., WiFi, Parking, AC)"
                       @keyup.enter="addAmenity"
                     >
                     <button type="button" class="btn btn-outline-success" @click="addAmenity">
@@ -244,13 +261,14 @@
                     </button>
                   </div>
                   <div class="mt-2" v-if="form.amenities.length > 0">
-                    <span v-for="(amenity, index) in form.amenities" :key="index" 
+                    <span v-for="(amenity, index) in form.amenities" :key="`form-amenity-${index}`" 
                           class="badge bg-success me-2 mb-2">
                       {{ amenity }}
                       <button type="button" class="btn-close btn-close-white ms-2" 
                               @click="removeAmenity(index)" style="font-size: 0.7em;"></button>
                     </span>
                   </div>
+                  <small class="text-muted">Press Enter or click + to add amenities</small>
                 </div>
               </div>
 
@@ -499,5 +517,29 @@ onMounted(loadVenues);
 
 .card:hover {
   transform: translateY(-2px);
+}
+
+.amenities-section {
+  margin-top: 0.5rem;
+}
+
+.badge {
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+/* Ensure badges are properly sized and spaced */
+.badge.bg-success.bg-opacity-10 {
+  background-color: rgba(25, 135, 84, 0.1) !important;
+  color: #198754 !important;
+  border: 1px solid rgba(25, 135, 84, 0.25) !important;
+}
+
+/* Fix for small screens */
+@media (max-width: 576px) {
+  .amenities-section .badge {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.25rem;
+  }
 }
 </style>
