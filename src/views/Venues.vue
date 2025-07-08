@@ -64,20 +64,22 @@
                 <div v-if="venue.amenities && venue.amenities.length > 0" class="amenities-section">
                   <div class="d-flex flex-wrap gap-1">
                     <span 
-                      v-for="(amenity, index) in venue.amenities.slice(0, 3)" 
+                      v-for="(amenity, index) in getDisplayedAmenities(venue)" 
                       :key="`${venue._id}-amenity-${index}`" 
-                      class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25"
+                      class="badge tag-style"
                       style="font-size: 0.75rem;"
                     >
                       {{ amenity }}
                     </span>
-                    <span 
+                    <button 
                       v-if="venue.amenities.length > 3" 
-                      class="badge bg-secondary"
+                      @click="toggleAmenitiesDisplay(venue._id!)"
+                      class="btn btn-sm badge bg-secondary text-white border-0"
                       style="font-size: 0.75rem;"
+                      type="button"
                     >
-                      +{{ venue.amenities.length - 3 }} more
-                    </span>
+                      {{ isAmenitiesExpanded(venue._id!) ? 'Show less' : `+${venue.amenities.length - 3} more` }}
+                    </button>
                   </div>
                 </div>
                 
@@ -262,7 +264,7 @@
                   </div>
                   <div class="mt-2" v-if="form.amenities.length > 0">
                     <span v-for="(amenity, index) in form.amenities" :key="`form-amenity-${index}`" 
-                          class="badge bg-success me-2 mb-2">
+                          class="badge tag-style me-2 mb-2">
                       {{ amenity }}
                       <button type="button" class="btn-close btn-close-white ms-2" 
                               @click="removeAmenity(index)" style="font-size: 0.7em;"></button>
@@ -303,6 +305,7 @@ const editingVenue = ref<Venue | null>(null);
 const loading = ref(false);
 const saveError = ref('');
 const newAmenity = ref('');
+const expandedAmenities = ref<Set<string>>(new Set());
 
 const form = reactive<VenueFormData>({
   name: '',
@@ -329,6 +332,25 @@ const errors = reactive({
   description: '',
   capacity: ''
 });
+
+const toggleAmenitiesDisplay = (venueId: string) => {
+  if (expandedAmenities.value.has(venueId)) {
+    expandedAmenities.value.delete(venueId);
+  } else {
+    expandedAmenities.value.add(venueId);
+  }
+};
+
+const isAmenitiesExpanded = (venueId: string) => {
+  return expandedAmenities.value.has(venueId);
+};
+
+const getDisplayedAmenities = (venue: Venue) => {
+  if (!venue.amenities) return [];
+  if (venue.amenities.length <= 3) return venue.amenities;
+  if (isAmenitiesExpanded(venue._id!)) return venue.amenities;
+  return venue.amenities.slice(0, 3);
+};
 
 const loadVenues = async () => {
   const currentUser = db.getCurrentUser();
@@ -529,10 +551,20 @@ onMounted(loadVenues);
 }
 
 /* Ensure badges are properly sized and spaced */
-.badge.bg-success.bg-opacity-10 {
-  background-color: rgba(25, 135, 84, 0.1) !important;
-  color: #198754 !important;
-  border: 1px solid rgba(25, 135, 84, 0.25) !important;
+.badge.tag-style {
+  background-color: #e3f2fd !important;
+  color: #000000 !important;
+  border: 1px solid #bbdefb !important;
+  font-weight: 500 !important;
+}
+
+.badge.tag-style .btn-close {
+  filter: invert(1);
+  opacity: 0.7;
+}
+
+.badge.tag-style .btn-close:hover {
+  opacity: 1;
 }
 
 /* Fix for small screens */

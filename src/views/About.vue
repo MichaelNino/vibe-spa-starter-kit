@@ -60,23 +60,23 @@
               <div class="col-md-6">
                 <ul class="list-unstyled">
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Venue management with CRUD operations
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Activity planning and scheduling
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     User registration & authentication
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Local data persistence
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Dynamic theme switching
                   </li>
                 </ul>
@@ -84,27 +84,27 @@
               <div class="col-md-6">
                 <ul class="list-unstyled">
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Mobile-responsive design
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Form validation and error handling
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     TypeScript support
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Modern ES6+ JavaScript
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Customizable user profiles
                   </li>
                   <li class="mb-2">
-                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <span class="badge tag-style me-2">✓</span>
                     Gender-based branding
                   </li>
                 </ul>

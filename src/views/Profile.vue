@@ -23,7 +23,7 @@
           <h1 class="h3 text-primary fw-bold">User Profile</h1>
           <p class="text-muted">Manage your account information</p>
           <div v-if="user?.administrator" class="mb-2">
-            <span class="badge bg-warning text-dark">
+            <span class="badge tag-style">
               <i class="bi bi-shield-check me-1"></i>
               Administrator
             </span>
@@ -302,7 +302,7 @@
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Administrator</strong>
                   <p class="mb-2">
-                    <span v-if="user?.administrator" class="badge bg-warning text-dark">
+                    <span v-if="user?.administrator" class="badge tag-style">
                       <i class="bi bi-shield-check me-1"></i>
                       Yes
                     </span>

@@ -15,9 +15,9 @@
           <div class="d-flex justify-content-md-end justify-content-center align-items-center">
             <span class="me-3">Powered by:</span>
             <div class="d-flex gap-2">
-              <span class="badge bg-primary">Vue 3</span>
-              <span class="badge bg-primary">Bootstrap 5</span>
-              <span class="badge bg-warning text-dark">PouchDB</span>
+              <span class="badge tag-style">Vue 3</span>
+              <span class="badge tag-style">Bootstrap 5</span>
+              <span class="badge tag-style">PouchDB</span>
             </div>
           </div>
         </div>

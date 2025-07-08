@@ -217,6 +217,22 @@ body {
   background-color: var(--primary-color) !important;
 }
 
+/* Light blue background with black text for all tags */
+.badge.tag-style,
+.badge.bg-success.bg-opacity-10,
+.badge.bg-primary.bg-opacity-10 {
+  background-color: #e3f2fd !important;
+  color: #000000 !important;
+  border: 1px solid #bbdefb !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure consistent tag styling across the app */
+.badge.tag-style:hover {
+  background-color: #bbdefb !important;
+  color: #000000 !important;
+}
+
 .bg-primary.bg-opacity-10 {
   background-color: var(--primary-color) !important;
   opacity: 0.1;

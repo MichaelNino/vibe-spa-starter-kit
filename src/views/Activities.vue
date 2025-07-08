@@ -75,7 +75,7 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="d-flex gap-1">
-                    <span class="badge bg-success bg-opacity-10 text-success">{{ activity.category }}</span>
+                    <span class="badge tag-style">{{ activity.category }}</span>
                     <span class="badge" :class="getDifficultyClass(activity.difficulty)">
                       {{ activity.difficulty }}
                     </span>
@@ -286,7 +286,7 @@
                   </div>
                   <div class="mt-2" v-if="form.requirements.length > 0">
                     <span v-for="(requirement, index) in form.requirements" :key="index" 
-                          class="badge bg-success me-2 mb-2">
+                          class="badge tag-style me-2 mb-2">
                       {{ requirement }}
                       <button type="button" class="btn-close btn-close-white ms-2" 
                               @click="removeRequirement(index)" style="font-size: 0.7em;"></button>
