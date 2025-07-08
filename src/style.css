@@ -96,13 +96,16 @@ body {
   text-decoration: underline !important;
 }
 
-.maps-link .bi-box-arrow-up-right {
-  opacity: 0.7;
-  transition: opacity 0.2s ease-in-out;
+.bi-box-arrow-up-right {
+  color: var(--primary-color) !important;
+  opacity: 0.8;
+  transition: all 0.2s ease-in-out;
 }
 
-.maps-link:hover .bi-box-arrow-up-right {
+.maps-link:hover .bi-box-arrow-up-right,
+.bi-box-arrow-up-right:hover {
   opacity: 1;
+  transform: translateY(-1px);
 }
 
 .avatar-sm {
