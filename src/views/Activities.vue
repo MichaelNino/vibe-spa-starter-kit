@@ -48,7 +48,7 @@
                 <div class="mb-2">
                   <small class="text-muted">
                     <i class="bi bi-building me-1"></i>
-                    {{ activity.venueName }}
+                    <span>{{ activity.venueName }}</span>
                   </small>
                 </div>
                 

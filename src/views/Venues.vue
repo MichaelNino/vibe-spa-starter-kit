@@ -42,7 +42,16 @@
                 <div class="mb-2">
                   <small class="text-muted">
                     <i class="bi bi-geo-alt me-1"></i>
-                    {{ venue.address }}, {{ venue.city }}, {{ venue.state }}
+                    <a 
+                      :href="getGoogleMapsUrl(venue)" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="text-decoration-none text-muted"
+                      :title="`Open ${venue.name} in Google Maps`"
+                    >
+                      {{ venue.address }}, {{ venue.city }}, {{ venue.state }} {{ venue.zipCode }}
+                      <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 0.8em;"></i>
+                    </a>
                   </small>
                 </div>
                 
@@ -350,6 +359,12 @@ const getDisplayedAmenities = (venue: Venue) => {
   if (venue.amenities.length <= 3) return venue.amenities;
   if (isAmenitiesExpanded(venue._id!)) return venue.amenities;
   return venue.amenities.slice(0, 3);
+};
+
+const getGoogleMapsUrl = (venue: Venue): string => {
+  const address = `${venue.address}, ${venue.city}, ${venue.state} ${venue.zipCode}`;
+  const encodedAddress = encodeURIComponent(address);
+  return `https://www.google.com/maps/place/${encodedAddress}`;
 };
 
 const loadVenues = async () => {

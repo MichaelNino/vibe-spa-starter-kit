@@ -293,7 +293,18 @@
                 </div>
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Location</strong>
-                  <p class="mb-2">{{ user?.city }}, {{ getStateName(user?.state || '') }}</p>
+                  <p class="mb-2">
+                    <a 
+                      :href="getUserLocationMapsUrl()" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="text-decoration-none"
+                      :title="`Open ${user?.city}, ${getStateName(user?.state || '')} in Google Maps`"
+                    >
+                      {{ user?.city }}, {{ getStateName(user?.state || '') }}
+                      <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 0.8em;"></i>
+                    </a>
+                  </p>
                 </div>
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Gender</strong>
@@ -496,6 +507,13 @@ const getBrandName = () => {
 
 const getThemeColor = (theme?: string) => {
   return db.getThemeColor(theme || 'Green');
+};
+
+const getUserLocationMapsUrl = (): string => {
+  if (!user.value?.city || !user.value?.state) return '#';
+  const location = `${user.value.city}, ${getStateName(user.value.state)}`;
+  const encodedLocation = encodeURIComponent(location);
+  return `https://www.google.com/maps/place/${encodedLocation}`;
 };
 
 const validateForm = (): boolean => {
