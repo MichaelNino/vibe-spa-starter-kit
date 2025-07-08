@@ -11,6 +11,7 @@ export interface User {
   gender: 'Male' | 'Female';
   theme: 'Green' | 'Blue' | 'Pink' | 'Purple' | 'Red';
   administrator: boolean;
+  bookmarkedVenues: string[]; // Array of venue IDs
   avatar?: string; // Base64 encoded image
   password?: string;
   createdAt: Date;

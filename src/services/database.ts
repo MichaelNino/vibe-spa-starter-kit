@@ -46,6 +46,7 @@ class DatabaseService {
         gender: userData.gender,
         theme: userData.theme,
         administrator: userData.administrator,
+        bookmarkedVenues: [],
         password: userData.password, // In production, this should be hashed
         createdAt: new Date(),
         updatedAt: new Date()

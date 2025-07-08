@@ -2,6 +2,7 @@ export interface Venue {
   _id?: string;
   _rev?: string;
   name: string;
+  website?: string;
   address: string;
   city: string;
   state: string;
@@ -19,6 +20,7 @@ export interface Venue {
 
 export interface VenueFormData {
   name: string;
+  website: string;
   address: string;
   city: string;
   state: string;
