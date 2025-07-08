@@ -327,6 +327,7 @@ const form = reactive<UserRegistration>({
   gender: 'Male',
   theme: 'Green',
   administrator: false,
+  bookmarkedVenues: [],
   password: ''
 });
 

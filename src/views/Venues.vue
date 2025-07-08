@@ -30,6 +30,14 @@
                       <li><button class="dropdown-item" @click="editVenue(venue)">
                         <i class="bi bi-pencil me-2"></i>Edit
                       </button></li>
+                       <li><button 
+                         class="dropdown-item" 
+                         @click="toggleBookmark(venue)"
+                         :class="{ 'text-warning': isBookmarked(venue._id!) }"
+                       >
+                         <i :class="isBookmarked(venue._id!) ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'" class="me-2"></i>
+                         {{ isBookmarked(venue._id!) ? 'Remove Bookmark' : 'Bookmark Venue' }}
+                       </button></li>
                       <li><button class="dropdown-item text-danger" @click="deleteVenue(venue)">
                         <i class="bi bi-trash me-2"></i>Delete
                       </button></li>
@@ -307,6 +315,7 @@
 import { ref, reactive, onMounted } from 'vue';
 import { venueService } from '../services/venueService';
 import { db } from '../services/database';
+import { bookmarkService } from '../services/bookmarkService';
 import type { Venue, VenueFormData } from '../types/venue';
 
 const venues = ref<Venue[]>([]);
@@ -365,6 +374,20 @@ const getGoogleMapsUrl = (venue: Venue): string => {
   const address = `${venue.address}, ${venue.city}, ${venue.state} ${venue.zipCode}`;
   const encodedAddress = encodeURIComponent(address);
   return `https://www.google.com/maps/place/${encodedAddress}`;
+};
+
+const isBookmarked = (venueId: string): boolean => {
+  return bookmarkService.isBookmarked(venueId);
+};
+
+const toggleBookmark = async (venue: Venue) => {
+  const result = await bookmarkService.toggleBookmark(venue._id!);
+  if (result.success) {
+    // Force reactivity update
+    await loadVenues();
+  } else {
+    alert(result.message);
+  }
 };
 
 const loadVenues = async () => {

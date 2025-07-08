@@ -339,6 +339,65 @@
           </div>
         </div>
 
+        <!-- Bookmarked Venues Section -->
+        <div class="card shadow-sm border-0 mb-4" v-if="bookmarkedVenues.length > 0">
+          <div class="card-body p-4">
+            <h3 class="h5 text-primary mb-3">
+              <i class="bi bi-bookmark-fill me-2"></i>
+              Bookmarked Venues ({{ bookmarkedVenues.length }})
+            </h3>
+            
+            <div class="row g-3">
+              <div class="col-md-6" v-for="venue in bookmarkedVenues" :key="venue._id">
+                <div class="card border-0 bg-light">
+                  <div class="card-body p-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <h6 class="card-title mb-0">
+                        <a 
+                          v-if="venue.website" 
+                          :href="formatWebsiteUrl(venue.website)" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          class="text-decoration-none text-primary"
+                          :title="`Visit ${venue.name} website`"
+                        >
+                          {{ venue.name }}
+                          <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 0.7em;"></i>
+                        </a>
+                        <span v-else class="text-primary">{{ venue.name }}</span>
+                      </h6>
+                      <button 
+                        @click="removeBookmark(venue._id!)"
+                        class="btn btn-sm btn-outline-danger"
+                        title="Remove bookmark"
+                      >
+                        <i class="bi bi-bookmark-dash"></i>
+                      </button>
+                    </div>
+                    <p class="text-muted small mb-2">
+                      <i class="bi bi-geo-alt me-1"></i>
+                      <a 
+                        :href="getGoogleMapsUrl(venue)" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="text-decoration-none text-muted"
+                        :title="`Open ${venue.name} in Google Maps`"
+                      >
+                        {{ venue.city }}, {{ venue.state }}
+                        <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 0.7em;"></i>
+                      </a>
+                    </p>
+                    <p class="text-muted small mb-0">
+                      <i class="bi bi-people me-1"></i>
+                      Capacity: {{ venue.capacity }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="card shadow-sm border-0">
           <div class="card-body p-4">
             <h3 class="h5 text-danger mb-3">
@@ -364,8 +423,10 @@ import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { db } from '../services/database';
 import { US_STATES, getStateName } from '../utils/states';
+import { bookmarkService } from '../services/bookmarkService';
 import UserAvatar from '../components/UserAvatar.vue';
 import type { User } from '../types/user';
+import type { Venue } from '../types/venue';
 
 const router = useRouter();
 
@@ -376,6 +437,7 @@ const updateError = ref('');
 const updateSuccess = ref('');
 const fileInput = ref<HTMLInputElement | null>(null);
 const avatarPreview = ref('');
+const bookmarkedVenues = ref<Venue[]>([]);
 
 const form = reactive({
   firstName: '',
@@ -406,10 +468,15 @@ onMounted(async () => {
   user.value = await db.loadCurrentUser();
   if (user.value) {
     populateForm();
+    await loadBookmarkedVenues();
   } else {
     router.push('/login');
   }
 });
+
+const loadBookmarkedVenues = async () => {
+  bookmarkedVenues.value = await bookmarkService.getBookmarkedVenues();
+};
 
 const populateForm = () => {
   if (user.value) {
@@ -514,6 +581,30 @@ const getUserLocationMapsUrl = (): string => {
   const location = `${user.value.city}, ${getStateName(user.value.state)}`;
   const encodedLocation = encodeURIComponent(location);
   return `https://www.google.com/maps/place/${encodedLocation}`;
+};
+
+const getGoogleMapsUrl = (venue: Venue): string => {
+  const address = `${venue.address}, ${venue.city}, ${venue.state} ${venue.zipCode}`;
+  const encodedAddress = encodeURIComponent(address);
+  return `https://www.google.com/maps/place/${encodedAddress}`;
+};
+
+const formatWebsiteUrl = (website: string): string => {
+  if (!website) return '';
+  // Add protocol if missing
+  if (!website.startsWith('http://') && !website.startsWith('https://')) {
+    return `https://${website}`;
+  }
+  return website;
+};
+
+const removeBookmark = async (venueId: string) => {
+  const result = await bookmarkService.toggleBookmark(venueId);
+  if (result.success) {
+    await loadBookmarkedVenues();
+  } else {
+    alert(result.message);
+  }
 };
 
 const validateForm = (): boolean => {
