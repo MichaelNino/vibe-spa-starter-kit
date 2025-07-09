@@ -285,11 +285,19 @@
                 </div>
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Email</strong>
-                  <p class="mb-2">{{ user?.email }}</p>
+                  <p class="mb-2">
+                    <a :href="`mailto:${user?.email}`" class="text-decoration-none">
+                      {{ user?.email }}
+                    </a>
+                  </p>
                 </div>
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Phone</strong>
-                  <p class="mb-2">{{ user?.phone }}</p>
+                  <p class="mb-2">
+                    <a :href="`tel:${user?.phone}`" class="text-decoration-none">
+                      {{ user?.phone }}
+                    </a>
+                  </p>
                 </div>
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Location</strong>
