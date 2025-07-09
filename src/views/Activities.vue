@@ -585,4 +585,5 @@ onMounted(loadData);
      font-size: 0.7rem !important;
      margin-bottom: 0.25rem;
    }
+ }
 </style>
