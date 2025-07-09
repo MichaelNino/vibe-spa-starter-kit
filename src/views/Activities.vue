@@ -578,4 +578,11 @@ onMounted(loadData);
 .card:hover {
   transform: translateY(-2px);
 }
+
+/* Fix for small screens */
+@media (max-width: 576px) {
+   .amenities-section .badge {
+     font-size: 0.7rem !important;
+     margin-bottom: 0.25rem;
+   }
 </style>
