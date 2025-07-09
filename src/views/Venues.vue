@@ -73,7 +73,7 @@
                 <div class="mb-3">
                   <small class="text-muted">
                     <i class="bi bi-telephone me-1"></i>
-                    <a :href="`tel:${venue.phone}`" class="text-decoration-none text-muted">
+                    <a :href="`tel:${venue.phone}`">
                       {{ venue.phone }}
                     </a>
                   </small>
@@ -82,7 +82,7 @@
                 <div class="mb-3">
                   <small class="text-muted">
                     <i class="bi bi-envelope me-1"></i>
-                    <a :href="`mailto:${venue.email}`" class="text-decoration-none text-muted">
+                    <a :href="`mailto:${venue.email}`">
                       {{ venue.email }}
                     </a>
                   </small>

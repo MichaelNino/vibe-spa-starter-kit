@@ -241,22 +241,97 @@ body {
   background-color: var(--primary-color) !important;
 }
 
-/* Light blue background with black text for all tags */
+/* Theme color background with white text for all tags */
 .badge.tag-style,
 .badge.bg-success.bg-opacity-10,
 .badge.bg-primary.bg-opacity-10 {
-  background-color: #e3f2fd !important;
-  color: #000000 !important;
-  border: 1px solid #bbdefb !important;
+  background-color: var(--primary-color) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--primary-color) !important;
   font-weight: 500 !important;
+  opacity: 0.9;
 }
 
 /* Ensure consistent tag styling across the app */
 .badge.tag-style:hover {
-  background-color: #bbdefb !important;
-  color: #000000 !important;
+  background-color: var(--primary-color) !important;
+  color: #ffffff !important;
+  opacity: 1;
 }
 
+/* Email and phone links styling */
+a[href^="mailto:"],
+a[href^="tel:"] {
+  color: var(--primary-color) !important;
+  text-decoration: underline !important;
+  transition: all 0.2s ease-in-out;
+}
+
+a[href^="mailto:"]:hover,
+a[href^="tel:"]:hover {
+  color: var(--primary-color) !important;
+  text-decoration: underline !important;
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+/* All Bootstrap Icons use theme color */
+.bi {
+  color: var(--primary-color) !important;
+}
+
+/* Override specific icon colors that should remain neutral */
+.text-muted .bi,
+.text-secondary .bi,
+.text-dark .bi,
+.text-light .bi,
+.text-white .bi,
+.btn-close .bi,
+.dropdown-toggle .bi,
+.navbar-toggler .bi {
+  color: inherit !important;
+}
+
+/* Specific icon color overrides for danger/warning contexts */
+.text-danger .bi,
+.btn-danger .bi,
+.alert-danger .bi {
+  color: #dc3545 !important;
+}
+
+.text-warning .bi,
+.btn-warning .bi,
+.alert-warning .bi {
+  color: #ffc107 !important;
+}
+
+/* Success icons should use theme color */
+.text-success .bi,
+.btn-success .bi,
+.alert-success .bi {
+  color: var(--primary-color) !important;
+}
+
+/* Primary icons should use theme color */
+.text-primary .bi,
+.btn-primary .bi {
+  color: var(--primary-color) !important;
+}
+
+/* Navbar brand icon */
+.navbar-brand .bi {
+  color: var(--primary-color) !important;
+}
+
+/* Card title icons */
+.card-title .bi {
+  color: var(--primary-color) !important;
+}
+
+/* Header icons */
+h1 .bi, h2 .bi, h3 .bi, h4 .bi, h5 .bi, h6 .bi {
+  color: var(--primary-color) !important;
+}
 .bg-primary.bg-opacity-10 {
   background-color: var(--primary-color) !important;
   opacity: 0.1;

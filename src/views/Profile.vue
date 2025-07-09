@@ -286,7 +286,7 @@
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Email</strong>
                   <p class="mb-2">
-                    <a :href="`mailto:${user?.email}`" class="text-decoration-none">
+                    <a :href="`mailto:${user?.email}`">
                       {{ user?.email }}
                     </a>
                   </p>
@@ -294,7 +294,7 @@
                 <div class="col-md-6">
                   <strong class="text-muted d-block small">Phone</strong>
                   <p class="mb-2">
-                    <a :href="`tel:${user?.phone}`" class="text-decoration-none">
+                    <a :href="`tel:${user?.phone}`">
                       {{ user?.phone }}
                     </a>
                   </p>
