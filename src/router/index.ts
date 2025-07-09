@@ -7,8 +7,7 @@ import Register from '../views/Register.vue';
 import Profile from '../views/Profile.vue';
 import Venues from '../views/Venues.vue';
 import Activities from '../views/Activities.vue';
-import Venues from '../views/Venues.vue';
-import Activities from '../views/Activities.vue';
+import TermsOfService from '../views/TermsOfService.vue';
 import { db } from '../services/database';
 
 const routes: RouteRecordRaw[] = [
@@ -53,16 +52,9 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/venues',
-    name: 'Venues',
-    component: Venues,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/activities',
-    name: 'Activities',
-    component: Activities,
-    meta: { requiresAuth: true }
+    path: '/terms',
+    name: 'TermsOfService',
+    component: TermsOfService
   }
 ];
 

@@ -150,11 +150,7 @@ body {
 
 /* Button animations */
 .btn {
-  transition: all 0.2s ease-in-out;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 /* Dynamic primary button styles */

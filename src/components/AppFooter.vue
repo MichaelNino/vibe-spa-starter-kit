@@ -7,18 +7,15 @@
             <i class="bi bi-mountain text-primary me-2" style="font-size: 1.5rem;"></i>
             <div>
               <h6 class="mb-0">{{ brandName }}</h6>
-              <small class="text-white">Match, Play and Social Platform</small>
+              <small class="text-white">Your ultimate social, venue and activity management platform</small>
             </div>
           </div>
         </div>
         <div class="col-md-6 text-md-end mt-3 mt-md-0">
           <div class="d-flex justify-content-md-end justify-content-center align-items-center">
-            <span class="me-3">Powered by:</span>
-            <div class="d-flex gap-2">
-              <span class="badge tag-style">Vue 3</span>
-              <span class="badge tag-style">Bootstrap 5</span>
-              <span class="badge tag-style">PouchDB</span>
-            </div>
+            <router-link to="/terms" class="text-white text-decoration-underline">
+              Terms of Service
+            </router-link>
           </div>
         </div>
       </div>
