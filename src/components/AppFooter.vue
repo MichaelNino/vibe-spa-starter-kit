@@ -25,10 +25,6 @@
       <hr class="my-3">
       <div class="row">
         <div class="col-12 text-center">
-          <small class="text-muted">
-            © {{ currentYear }} {{ brandName }}. All data stored locally in your browser.
-          </small>
-          <br>
           <small class="text-warning">
             Created by Launch Software © 2025 - All Rights Reserved.
           </small>
