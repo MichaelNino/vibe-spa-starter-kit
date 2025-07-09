@@ -7,7 +7,7 @@
             <i class="bi bi-mountain text-primary me-2" style="font-size: 1.5rem;"></i>
             <div>
               <h6 class="mb-0">{{ brandName }}</h6>
-              <small class="text-muted">Venue and activity management platform</small>
+              <small class="text-white">Match, Play and Social Platform</small>
             </div>
           </div>
         </div>
@@ -27,6 +27,10 @@
         <div class="col-12 text-center">
           <small class="text-muted">
             © {{ currentYear }} {{ brandName }}. All data stored locally in your browser.
+          </small>
+          <br>
+          <small class="text-warning">
+            Created by Launch Software © 2025 - All Rights Reserved.
           </small>
         </div>
       </div>

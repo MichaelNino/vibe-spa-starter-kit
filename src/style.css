@@ -280,6 +280,11 @@ a[href^="tel:"]:hover {
   color: var(--primary-color) !important;
 }
 
+/* Button icons should be white */
+.btn .bi {
+  color: #ffffff !important;
+}
+
 /* Override specific icon colors that should remain neutral */
 .text-muted .bi,
 .text-secondary .bi,
@@ -305,16 +310,15 @@ a[href^="tel:"]:hover {
   color: #ffc107 !important;
 }
 
-/* Success icons should use theme color */
+/* Success icons should use theme color, except in buttons */
 .text-success .bi,
-.btn-success .bi,
 .alert-success .bi {
   color: var(--primary-color) !important;
 }
 
-/* Primary icons should use theme color */
+/* Primary icons should use theme color, except in buttons */
 .text-primary .bi,
-.btn-primary .bi {
+.text-primary .bi {
   color: var(--primary-color) !important;
 }
 
